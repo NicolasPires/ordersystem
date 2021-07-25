@@ -1,4 +1,4 @@
-package com.nksolucoes.ordersystem.domain.unums;
+package com.nksolucoes.ordersystem.domain.enums;
 
 public enum TipoCliente {
 
