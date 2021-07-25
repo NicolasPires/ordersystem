@@ -13,6 +13,7 @@ import com.nksolucoes.ordersystem.domain.Cidade;
 import com.nksolucoes.ordersystem.domain.Cliente;
 import com.nksolucoes.ordersystem.domain.Endereco;
 import com.nksolucoes.ordersystem.domain.Estado;
+import com.nksolucoes.ordersystem.domain.ItemPedido;
 import com.nksolucoes.ordersystem.domain.Pagamento;
 import com.nksolucoes.ordersystem.domain.PagamentoComBoleto;
 import com.nksolucoes.ordersystem.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.nksolucoes.ordersystem.repositories.CidadeRepository;
 import com.nksolucoes.ordersystem.repositories.ClienteRepository;
 import com.nksolucoes.ordersystem.repositories.EnderecoRepository;
 import com.nksolucoes.ordersystem.repositories.EstadoRepository;
+import com.nksolucoes.ordersystem.repositories.ItemPedidoRepository;
 import com.nksolucoes.ordersystem.repositories.PagamentoRepository;
 import com.nksolucoes.ordersystem.repositories.PedidoRepository;
 import com.nksolucoes.ordersystem.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class OrdersystemApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrdersystemApplication.class, args);
@@ -111,6 +115,19 @@ public class OrdersystemApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00); 
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 		
 
 	}
